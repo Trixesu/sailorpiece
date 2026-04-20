@@ -26,6 +26,8 @@ end)
 local selectedKeys = {}
 local running = false
 local delay = 1
+local blackGui = nil
+local TweenService = game:GetService("TweenService")
 
 -- Tab
 local Tab = Window:CreateTab("Main", 4483362458)
@@ -70,6 +72,35 @@ Tab:CreateToggle({
                task.wait(delay)
             end
          end)
+      end
+   end,
+})
+
+-- Toggle Blank Screen
+Tab:CreateToggle({
+   Name = "Black Screen",
+   CurrentValue = false,
+   Callback = function(state)
+      if state then
+         blackGui = Instance.new("ScreenGui")
+         blackGui.Name = "BlackScreen"
+         blackGui.IgnoreGuiInset = true -- 🔥 INI KUNCI
+         blackGui.ResetOnSpawn = false
+         blackGui.Parent = game.CoreGui
+
+         local frame = Instance.new("Frame")
+         frame.Size = UDim2.new(1,0,1,0)
+         frame.Position = UDim2.new(0,0,0,0)
+         frame.BackgroundColor3 = Color3.new(0,0,0)
+         frame.BackgroundTransparency = 0
+         frame.BorderSizePixel = 0
+         frame.Parent = blackGui
+         
+      else
+         if blackGui then
+            blackGui:Destroy()
+            blackGui = nil
+         end
       end
    end,
 })
